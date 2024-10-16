@@ -15,6 +15,30 @@ function multiply(a, b) {
 function divide(a, b) {
   return b === 0 ? "No dividing by zero :madge:" : a / b;
 }
+function handleClick({ target: { value: keyValue } }) {
+  switch (keyValue) {
+    case "AC":
+      // Call function that clears display
+      break;
+
+    // Fall through on similar cases
+    case "/":
+    case "*":
+    case "+":
+    case "-":
+      // Call function that evaluates if the operator should be added
+      break;
+    case ".":
+      // Call function that evaluates if a period should be added
+      break;
+    case "=":
+      // Try to evaluate expression with function;
+      calculate(displayValue);
+    default:
+    // Call function that adds key value to displayvalue
+  }
+}
+
 function evaluateExpression(operands) {
   const returnResult = {
     valid: true,
