@@ -15,6 +15,38 @@ function multiply(a, b) {
 function divide(a, b) {
   return b === 0 ? "No dividing by zero :madge:" : a / b;
 }
+
+function calculate(expression) {
+  const [firstOperand, secondOperand, operator] = splitExpression(expression);
+  const evalResult = evaluateExpression([firstOperand, secondOperand]);
+
+  if (!evalResult.valid) {
+    return evalResult.msg;
+  } else {
+    let result;
+
+    switch (operator) {
+      case "+":
+        result = add(firstOperand, secondOperand);
+        break;
+      case "-":
+        result = subtract(firstOperand, secondOperand);
+        break;
+      case "/":
+        result = divide(firstOperand, secondOperand);
+        break;
+      case "*":
+        result = multiply(firstOperand, secondOperand);
+        break;
+    }
+    return parseFloat(result);
+  }
+  // evaluate that expression is valid
+  // split expression into its operands
+  // extract operator from expression
+  // switch with operator that calls math function with operands as arguments
+}
+
 function handleClick({ target: { value: keyValue } }) {
   switch (keyValue) {
     case "AC":
