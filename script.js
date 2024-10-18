@@ -136,8 +136,8 @@ function handleCalculate(expression, optionalOperand = "") {
 // If the number is too large before the decimal, drop the decimal entirely.
 function roundNumber(number) {
   const [beforePeriod] = number.split(".");
-  const decimalToRound = 14 - beforePeriod.length - 3;
-
+  let decimalToRound = 14 - beforePeriod.length - 3;
+  if (parseInt(beforePeriod) < 0) decimalToRound--;
   if (decimalToRound < 0) return beforePeriod;
   return parseFloat(number).toFixed(decimalToRound);
 }
