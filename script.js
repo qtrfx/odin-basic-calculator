@@ -22,7 +22,7 @@ function handleClick(event) {
       resetDisplay();
       break;
     default:
-      if (event.target.classList.contains("keypad-key")) {
+      if (event.target.classList.contains("key")) {
         handleNumber(event.target.innerText);
       }
   }
