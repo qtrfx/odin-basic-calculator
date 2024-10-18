@@ -16,7 +16,7 @@ function handleClick(event) {
     case "-":
     case "/":
     case "*":
-      handleOperand(event.target.innerText);
+      handleOperator(event.target.innerText);
       break;
     case "Del":
       handleDelete(displayValue);
