@@ -68,7 +68,17 @@ function updateDisplay(newValue) {
 // Adds operator input to current expression but calculates current expression,
 // if an operator already exists in it.
 function handleOperator(operator) {
-  if (/(?!^\-)\-|[\/\+\*]/.test(displayValue)) {
+  const operatorRegex = /(?!^\-)\-|[\/\+\*]/;
+  const multiDiviRegex = /[\/\*]/;
+  const minusRegex = /(?!^\-)\-/;
+  if (
+    multiDiviRegex.test(displayValue) &&
+    operator === "-" &&
+    !minusRegex.test(displayValue)
+  ) {
+    displayValue += operator;
+    updateDisplay(displayValue);
+  } else if (operatorRegex.test(displayValue)) {
     handleCalculate(displayValue, operator);
   } else {
     displayValue += operator;
@@ -135,10 +145,11 @@ function roundNumber(number) {
 // Validates and splits up an expression to return for evaluation.
 function splitExpression(expression, periodCheck = false) {
   // This regular expression captures the first occurence of + / and * whereas
-  // - only gets captured if it is not at the beginning of of an operand.
-  // This is to ensure that the calculator can handle negative numbers.
-  const operatorRegex = /(?!^\-)\-|[\/\+\*]/;
-  const operands = expression.split(operatorRegex);
+  // - only gets captured if it is not at the beginning of of an operand and not
+  // preceded by a / or *. This is to ensure that the calculator can handle
+  // negative numbers.
+  const operatorRegex = /(?<![\*\/])(?!^\-)\-|[\/\+\*]/;
+  let operands = expression.split(operatorRegex);
   const operator = expression.match(operatorRegex);
 
   if (periodCheck) return operands.pop();
