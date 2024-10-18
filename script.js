@@ -83,6 +83,8 @@ function handleCalculate(expression, optionalOperand = "") {
     displayValue = splitUpExpression;
     updateDisplay(displayValue);
     return;
+  } else if (splitUpExpression === "unchanged") {
+    return;
   }
   // Convert operands to floats for easier calculation.
   const operands = splitUpExpression[0].map((operand) => parseFloat(operand));
@@ -137,7 +139,7 @@ function splitExpression(expression, periodCheck = false) {
   const operator = expression.match(operatorRegex);
 
   if (periodCheck) return operands.pop();
-
+  if (operands.length === 1) return "unchanged";
   if (!operator || operands[0] === "" || operands[1] === "") {
     return "Syntax Error";
   }
