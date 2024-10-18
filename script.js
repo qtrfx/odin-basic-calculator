@@ -41,6 +41,15 @@ function handleNumber(number) {
 function updateDisplay(newValue) {
   calculatorDisplay.innerText = newValue;
 }
+
+function handleOperand(operand) {
+  if (/[\+\-\*\/]/.test(displayValue)) {
+    handleCalculate(displayValue, operand);
+  } else {
+    displayValue += operand;
+    updateDisplay(displayValue);
+  }
+}
 function add(a, b) {
   return a + b;
 }
