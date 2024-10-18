@@ -170,7 +170,7 @@ function subtract(a, b) {
 
 function divide(a, b) {
   if (b == 0) {
-    return "No dividing by 0 :madge:";
+    return "Math Error";
   }
   return a / b;
 }
