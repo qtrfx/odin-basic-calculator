@@ -2,11 +2,39 @@ const keyPad = document.querySelector(".keypad");
 const calculatorDisplay = document.querySelector(".calculator-display");
 let displayValue = "0";
 
-keyPad.addEventListener("click", handleClick);
-keyPad.addEventListener("keydown", handleKeyPress);
+const keyDict = {
+  1: "1",
+  2: "2",
+  3: "3",
+  4: "4",
+  5: "5",
+  6: "6",
+  7: "7",
+  8: "8",
+  9: "9",
+  0: "0",
+  "+": "plus",
+  "-": "minus",
+  "*": "multi",
+  "/": "divide",
+  Delete: "delete",
+  "=": "equals",
+  ".": "period",
+};
+
+keyPad.addEventListener("click", handleButtonEvent);
+document.querySelector("body").addEventListener("keydown", (e) => {
+  if (e.key in keyDict) {
+    let keyClass = "";
+    if (e.key === "Delete" && e.getModifierState("Shift"))
+      keyClass = `.key-clear`;
+    else keyClass = `.key-${keyDict[e.key]}`;
+    document.querySelector(keyClass).click();
+  }
+});
 
 // This function handles all click events and calls the respective button functions
-function handleClick(event) {
+function handleButtonEvent(event, keyPressed = false) {
   // Resets the display to an empty state if the previous result was a syntax
   // error
   if (
