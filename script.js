@@ -82,6 +82,22 @@ function handleCalculate(expression, optionalOperand = "") {
   displayValue = result;
   updateDisplay(result);
 }
+
+function splitExpression(expression) {
+  const operatorRegex = /[\+\-\/\*]/;
+  const operands = expression.split(operatorRegex);
+  const operator = expression.match(operatorRegex);
+
+  if (
+    !operator ||
+    operands[0] === "" ||
+    operands[1] === "" ||
+    checkPeriods(operands)
+  ) {
+    return "Syntax Error";
+  }
+  return [[operands[0], operands[1]], operator];
+}
 function add(a, b) {
   return a + b;
 }
