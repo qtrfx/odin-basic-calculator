@@ -98,6 +98,21 @@ function splitExpression(expression) {
   }
   return [[operands[0], operands[1]], operator];
 }
+
+function checkPeriods(operands) {
+  let tooManyPeriods = false;
+  operands.every((operand) => {
+    const periodRegex = /\./g;
+    const amountOfPeriods = operand.match(periodRegex);
+
+    if (amountOfPeriods && amountOfPeriods.length > 1) {
+      tooManyPeriods = true;
+      return false;
+    }
+  });
+  return tooManyPeriods;
+}
+
 function add(a, b) {
   return a + b;
 }
