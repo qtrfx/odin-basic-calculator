@@ -15,6 +15,9 @@ function handleClick(event) {
     case "*":
       handleOperand(event.target.innerText);
       break;
+    case "Del":
+      handleDelete(displayValue);
+      break;
     case "=":
       handleCalculate(displayValue);
       break;
@@ -28,6 +31,12 @@ function handleClick(event) {
   }
 }
 
+function handleDelete(expression) {
+  if (expression.length > 0) {
+    displayValue = displayValue.slice(0, -1);
+    updateDisplay(displayValue);
+  }
+}
 function resetDisplay() {
   displayValue = "";
   calculatorDisplay.innerText = displayValue;
