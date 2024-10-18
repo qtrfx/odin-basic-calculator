@@ -50,6 +50,38 @@ function handleOperand(operand) {
     updateDisplay(displayValue);
   }
 }
+
+function handleCalculate(expression, optionalOperand = "") {
+  const splitUpExpression = splitExpression(expression);
+  if (!Array.isArray(splitUpExpression)) {
+    displayValue = splitUpExpression;
+    updateDisplay(displayValue);
+    return;
+  }
+  const operands = splitUpExpression[0].map((operand) => parseFloat(operand));
+  const operator = splitUpExpression[1][0];
+
+  let result;
+  switch (operator) {
+    case "+":
+      result = add(operands[0], operands[1]);
+      break;
+    case "-":
+      result = subtract(operands[0], operands[1]);
+      break;
+    case "*":
+      result = multiply(operands[0], operands[1]);
+      break;
+    case "/":
+      result = divide(operands[0], operands[1]);
+      break;
+  }
+  if (optionalOperand !== "") {
+    result += optionalOperand;
+  }
+  displayValue = result;
+  updateDisplay(result);
+}
 function add(a, b) {
   return a + b;
 }
