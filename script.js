@@ -28,6 +28,11 @@ function handleClick(event) {
   }
 }
 
+function resetDisplay() {
+  displayValue = "";
+  calculatorDisplay.innerText = displayValue;
+}
+
 function handleNumber(number) {
   displayValue += number;
   updateDisplay(displayValue);
