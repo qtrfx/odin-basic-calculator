@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -6,4 +8,108 @@
 
 body {
   background-color: rgb(22, 22, 34);
+  width: 100vw;
+  max-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator-container {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 500px;
+  max-width: 400px;
+  width: 80%;
+  height: 80%;
+  max-height: 900px;
+  background-color: rgb(59, 40, 61);
+  padding: 5px;
+  border: 3px solid black;
+  gap: 1px;
+}
+
+.calculator-display {
+  background-color: rgb(49, 71, 54);
+  width: 100%;
+  height: 130px;
+  border: 3px solid black;
+  font-family: "Anonymous Pro", monospace;
+  text-align: right;
+  display: flex;
+  justify-content: center;
+  align-items: right;
+  font-size: 3rem;
+  flex-direction: column;
+  color: white;
+  text-shadow: 0cqi;
+}
+
+.keypad {
+  width: 100%;
+  display: flex;
+  gap: 1px;
+  flex-grow: 1;
+}
+
+.keypad-left {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 300px;
+  gap: 1px;
+}
+
+.row {
+  display: flex;
+  flex-grow: 1;
+  gap: 1px;
+}
+
+.row * {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.keypad-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex-basis: 100px;
+}
+
+.keypad-right * {
+  flex-grow: 1;
+}
+
+.calculate-key {
+  flex-grow: 2.58;
+}
+
+.zero-key {
+  flex-grow: 2.03;
+  flex-basis: 1;
+}
+
+.key {
+  border: 1px solid black;
+  font-size: 20px;
+}
+
+.number-key,
+.period-key {
+  background-color: hsl(30, 10%, 30%);
+  color: white;
+}
+
+.key-clear,
+.key-delete {
+  background-color: hsl(0, 40%, 52%);
+}
+
+.operator-key,
+.calculate-key {
+  background-color: hsl(30, 40%, 52%);
 }
