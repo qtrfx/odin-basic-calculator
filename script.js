@@ -134,6 +134,9 @@ function roundNumber(number) {
 
 // Validates and splits up an expression to return for evaluation.
 function splitExpression(expression, periodCheck = false) {
+  // This regular expression captures the first occurence of + / and * whereas
+  // - only gets captured if it is not at the beginning of of an operand.
+  // This is to ensure that the calculator can handle negative numbers.
   const operatorRegex = /(?!^\-)\-|[\/\+\*]/;
   const operands = expression.split(operatorRegex);
   const operator = expression.match(operatorRegex);
