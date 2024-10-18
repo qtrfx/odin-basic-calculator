@@ -41,3 +41,21 @@ function handleNumber(number) {
 function updateDisplay(newValue) {
   calculatorDisplay.innerText = newValue;
 }
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function divide(a, b) {
+  if (b == 0) {
+    return "No dividing by 0 :madge:";
+  }
+  return a / b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
