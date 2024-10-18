@@ -50,7 +50,11 @@ function resetDisplay() {
 
 // Adds the number from the button input to the current expression.
 function handleNumber(number) {
-  displayValue += number;
+  if (number !== "." && displayValue === "0") {
+    displayValue = number;
+  } else {
+    displayValue += number;
+  }
   updateDisplay(displayValue);
 }
 
