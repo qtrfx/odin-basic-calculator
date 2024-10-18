@@ -27,6 +27,9 @@ function handleClick(event) {
     case "AC":
       resetDisplay();
       break;
+    case ".":
+      checkPeriods(displayValue);
+      break;
     default:
       if (event.target.classList.contains("key")) {
         handleNumber(event.target.innerText);
@@ -128,16 +131,14 @@ function roundNumber(number) {
 }
 
 // Validates and splits up an expression to return for evaluation.
-function splitExpression(expression) {
+function splitExpression(expression, periodCheck = false) {
   const operatorRegex = /(?!^\-)\-|[\/\+\*]/;
-  operands = expression.split(operatorRegex);
-  operator = expression.match(operatorRegex);
-  if (
-    !operator ||
-    operands[0] === "" ||
-    operands[1] === "" ||
-    checkPeriods(operands)
-  ) {
+  const operands = expression.split(operatorRegex);
+  const operator = expression.match(operatorRegex);
+
+  if (periodCheck) return operands.pop();
+
+  if (!operator || operands[0] === "" || operands[1] === "") {
     return "Syntax Error";
   }
   return [[operands[0], operands[1]], operator];
@@ -145,18 +146,12 @@ function splitExpression(expression) {
 
 // Checks if an operand has too many periods which would make the expression
 // invalid.
-function checkPeriods(operands) {
-  let tooManyPeriods = false;
-  operands.every((operand) => {
-    const periodRegex = /\./g;
-    const amountOfPeriods = operand.match(periodRegex);
-
-    if (amountOfPeriods && amountOfPeriods.length > 1) {
-      tooManyPeriods = true;
-      return false;
-    }
-  });
-  return tooManyPeriods;
+function checkPeriods(expression) {
+  const lastOperand = splitExpression(expression, true);
+  if (lastOperand.includes(".")) {
+    return;
+  }
+  handleNumber(".");
 }
 
 function add(a, b) {
