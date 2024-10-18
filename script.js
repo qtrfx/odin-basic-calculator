@@ -65,7 +65,7 @@ function updateDisplay(newValue) {
 // Adds operator input to current expression but calculates current expression,
 // if an operator already exists in it.
 function handleOperator(operator) {
-  if (/[\+\-\*\/]/.test(displayValue)) {
+  if (/(?!^\-)\-|[\/\+\*]/.test(displayValue)) {
     handleCalculate(displayValue, operator);
   } else {
     displayValue += operator;
@@ -129,10 +129,9 @@ function roundNumber(number) {
 
 // Validates and splits up an expression to return for evaluation.
 function splitExpression(expression) {
-  const operatorRegex = /[\+\-\/\*]/;
-  const operands = expression.split(operatorRegex);
-  const operator = expression.match(operatorRegex);
-
+  const operatorRegex = /(?!^\-)\-|[\/\+\*]/;
+  operands = expression.split(operatorRegex);
+  operator = expression.match(operatorRegex);
   if (
     !operator ||
     operands[0] === "" ||
