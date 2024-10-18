@@ -3,12 +3,17 @@ const calculatorDisplay = document.querySelector(".calculator-display");
 let displayValue = "0";
 
 keyPad.addEventListener("click", handleClick);
+keyPad.addEventListener("keydown", handleKeyPress);
 
 // This function handles all click events and calls the respective button functions
 function handleClick(event) {
   // Resets the display to an empty state if the previous result was a syntax
   // error
-  if (displayValue === "Syntax Error") {
+  if (
+    displayValue === "Syntax Error" ||
+    displayValue === "Math Error" ||
+    displayValue === "NaN"
+  ) {
     resetDisplay();
   }
   switch (event.target.innerText) {
@@ -40,8 +45,9 @@ function handleClick(event) {
 // Deletes the last digit in the displayed expression if it exists and updates
 // the display.
 function handleDelete(expression) {
-  if (expression.length > 0) {
-    displayValue = displayValue.slice(0, -1);
+  if (expression.length > 0 && expression !== "0") {
+    if (expression.length === 1) displayValue = "0";
+    else displayValue = displayValue.slice(0, -1);
     updateDisplay(displayValue);
   }
 }
@@ -68,7 +74,7 @@ function updateDisplay(newValue) {
 // Adds operator input to current expression but calculates current expression,
 // if an operator already exists in it.
 function handleOperator(operator) {
-  const operatorRegex = /(?!^\-)\-|[\/\+\*]/;
+  const operatorRegex = /(?<![\*\/])(?!^\-)\-|[\/\+\*]/;
   const multiDiviRegex = /[\/\*]/;
   const minusRegex = /(?!^\-)\-/;
   if (
