@@ -185,7 +185,7 @@ function splitExpression(expression, periodCheck = false) {
   const operatorRegex = /(?<![\*\/])(?!^\-)\-|[\/\+\*]/;
   let operands = expression.split(operatorRegex);
   const operator = expression.match(operatorRegex);
-
+  if (operands[1] && operands[1] === "-") operands[1] = "";
   if (periodCheck) return operands.pop();
   if (operands.length === 1) return "unchanged";
   if (!operator || operands[0] === "" || operands[1] === "") {
