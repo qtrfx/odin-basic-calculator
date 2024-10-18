@@ -76,13 +76,24 @@ function handleCalculate(expression, optionalOperand = "") {
       result = divide(operands[0], operands[1]);
       break;
   }
+  result = String(result);
   if (optionalOperand !== "") {
     result += optionalOperand;
+  }
+  if (result.length > 12 && result.includes(".")) {
+    result = roundNumber(result);
   }
   displayValue = result;
   updateDisplay(result);
 }
 
+function roundNumber(number) {
+  const [beforePeriod] = number.split(".");
+  const decimalToRound = 14 - beforePeriod.length - 3;
+
+  if (decimalToRound < 0) return beforePeriod;
+  return parseFloat(number).toFixed(decimalToRound);
+}
 function splitExpression(expression) {
   const operatorRegex = /[\+\-\/\*]/;
   const operands = expression.split(operatorRegex);
