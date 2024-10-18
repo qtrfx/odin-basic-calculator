@@ -1,6 +1,6 @@
 const keyPad = document.querySelector(".keypad");
 const calculatorDisplay = document.querySelector(".calculator-display");
-let displayValue = "";
+let displayValue = "0";
 
 keyPad.addEventListener("click", handleClick);
 
@@ -44,7 +44,7 @@ function handleDelete(expression) {
 }
 
 function resetDisplay() {
-  displayValue = "";
+  displayValue = "0";
   calculatorDisplay.innerText = displayValue;
 }
 
