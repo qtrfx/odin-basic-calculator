@@ -4,9 +4,12 @@ let displayValue = "";
 
 keyPad.addEventListener("click", handleClick);
 
+// This function handles all click events and calls the respective button functions
 function handleClick(event) {
+  // Resets the display to an empty state if the previous result was a syntax
+  // error
   if (displayValue === "Syntax Error") {
-    displayValue = "";
+    resetDisplay();
   }
   switch (event.target.innerText) {
     case "+":
@@ -31,17 +34,21 @@ function handleClick(event) {
   }
 }
 
+// Deletes the last digit in the displayed expression if it exists and updates
+// the display.
 function handleDelete(expression) {
   if (expression.length > 0) {
     displayValue = displayValue.slice(0, -1);
     updateDisplay(displayValue);
   }
 }
+
 function resetDisplay() {
   displayValue = "";
   calculatorDisplay.innerText = displayValue;
 }
 
+// Adds the number from the button input to the current expression.
 function handleNumber(number) {
   displayValue += number;
   updateDisplay(displayValue);
@@ -51,25 +58,30 @@ function updateDisplay(newValue) {
   calculatorDisplay.innerText = newValue;
 }
 
-function handleOperand(operand) {
+// Adds operator input to current expression but calculates current expression,
+// if an operator already exists in it.
+function handleOperator(operator) {
   if (/[\+\-\*\/]/.test(displayValue)) {
-    handleCalculate(displayValue, operand);
+    handleCalculate(displayValue, operator);
   } else {
-    displayValue += operand;
+    displayValue += operator;
     updateDisplay(displayValue);
   }
 }
 
 function handleCalculate(expression, optionalOperand = "") {
+  // Split up the expression if possible.
   const splitUpExpression = splitExpression(expression);
-  if (!Array.isArray(splitUpExpression)) {
+  if (splitUpExpression === "Syntax Error") {
     displayValue = splitUpExpression;
     updateDisplay(displayValue);
     return;
   }
+  // Convert operands to floats for easier calculation.
   const operands = splitUpExpression[0].map((operand) => parseFloat(operand));
   const operator = splitUpExpression[1][0];
 
+  // Get result of basic calculator function depending on operator
   let result;
   switch (operator) {
     case "+":
@@ -85,10 +97,14 @@ function handleCalculate(expression, optionalOperand = "") {
       result = divide(operands[0], operands[1]);
       break;
   }
+  // Convert result back to a string for easier manipulation afterwards
   result = String(result);
+  // Add operand to the result if the function was called through an operator key
   if (optionalOperand !== "") {
     result += optionalOperand;
   }
+  // If the resulting decimal number would overflow the calculator display,
+  // round it so it fits inside.
   if (result.length > 12 && result.includes(".")) {
     result = roundNumber(result);
   }
@@ -96,6 +112,9 @@ function handleCalculate(expression, optionalOperand = "") {
   updateDisplay(result);
 }
 
+// This function rounds the calculated result to a decimal that will let it fit
+// inside the calculator display without overflowing.
+// If the number is too large before the decimal, drop the decimal entirely.
 function roundNumber(number) {
   const [beforePeriod] = number.split(".");
   const decimalToRound = 14 - beforePeriod.length - 3;
@@ -103,6 +122,8 @@ function roundNumber(number) {
   if (decimalToRound < 0) return beforePeriod;
   return parseFloat(number).toFixed(decimalToRound);
 }
+
+// Validates and splits up an expression to return for evaluation.
 function splitExpression(expression) {
   const operatorRegex = /[\+\-\/\*]/;
   const operands = expression.split(operatorRegex);
@@ -119,6 +140,8 @@ function splitExpression(expression) {
   return [[operands[0], operands[1]], operator];
 }
 
+// Checks if an operand has too many periods which would make the expression
+// invalid.
 function checkPeriods(operands) {
   let tooManyPeriods = false;
   operands.every((operand) => {
